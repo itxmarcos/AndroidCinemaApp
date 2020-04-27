@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cinemaapp.R
+import com.example.cinemaapp.utils.model.Actor
+import com.example.cinemaapp.utils.model.Genre
+import com.example.cinemaapp.utils.model.Movie
 import com.google.gson.Gson
 import java.io.BufferedInputStream
 import java.io.BufferedReader
@@ -14,7 +17,7 @@ import java.net.URL
 
 const val SERVER= "http://10.0.2.2"
 
-class HttpJsonGson: AppCompatActivity() {
+class MainActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +54,7 @@ class HttpJsonGson: AppCompatActivity() {
                 }.toString()).toString()
 
                 val movies = gson.fromJson(jsonStringMovies, Array<Movie>::class.java)
+
                 Log.e("CONTENT: ", movies.map{
                     it.toString()
                 }.toString()).toString()
@@ -78,25 +82,5 @@ class HttpJsonGson: AppCompatActivity() {
             total.append(line).append('\n')
         }
         return total.toString()
-    }
-}
-
-data class Actor(val id: String, val name: String) {
-    override fun toString(): String {
-        return "$id.- Actor name: $name"
-    }
-}
-
-
-
-data class Movie(val id: Int, val tittle: String, val genres: List<Int>, val description: String, val director: String, val actors: List<Int>, val year: Int, val length: Int, val rating: Float, val votes: Int, val revenue: Float) {
-    override fun toString(): String {
-        return "$id.- Movie tittle: $tittle"
-    }
-}
-
-data class Genre(val id: Int, val name: String) {
-    override fun toString(): String {
-        return "$id.- Genre: $name"
     }
 }

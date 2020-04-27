@@ -7,23 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.example.cinemaapp.utils.model.Person
-import kotlinx.android.synthetic.main.row_element.view.*
+import com.example.cinemaapp.utils.model.Movie
+import kotlinx.android.synthetic.main.row_element_movie.view.*
 
-class CustomAdapter : ArrayAdapter<Person> {
-
+class CustomAdapterMovies : ArrayAdapter<Movie> {
     val resourceId: Int
-
     class ViewHolder {
-        lateinit var text1 : TextView
-        lateinit var text2 : TextView
+        lateinit var idMovie : TextView
+        lateinit var titleMovie : TextView
+        lateinit var genreMovie : TextView
     }
 
-
-    constructor(context: Context, resourceId: Int, items: MutableList<Person>) : super(context, resourceId, items) {
+    constructor(context: Context, resourceId: Int, items: MutableList<Movie>) : super(context, resourceId, items) {
         this.resourceId = resourceId
     }
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
         val timestamp = System.currentTimeMillis()
@@ -33,17 +30,18 @@ class CustomAdapter : ArrayAdapter<Person> {
             Log.d("ADAPTER NEW VIEW", "New view ${System.currentTimeMillis() - timestamp}")
             val viewHolder =
                 ViewHolder()
-            viewHolder.text1 = view.text1 as TextView
-            viewHolder.text2 = view.text2 as TextView
-            view.tag = viewHolder
+            viewHolder.idMovie = view.idMovie as TextView
+            viewHolder.titleMovie = view.titleMovie as TextView
+            viewHolder.genreMovie = view.genreMovie as TextView
         } else {
             Log.d("ADAPTER REUSED VIEW", "Reused view ${System.currentTimeMillis() - timestamp}")
         }
         val value = getItem(position)
         val holder = view!!.tag as ViewHolder
-        holder.text1.text = "T1 ${value!!.name}"
-        holder.text2.text = "T2 ${value!!.familyName}"
-        Log.d("ADAPTER GET VIEW", value!!.name)
+        holder.idMovie.text = "T1 ${value!!.id}"
+        holder.titleMovie.text = "T2 ${value!!.title}"
+        holder.genreMovie.text = "T2 ${value!!.genres}"
+        Log.d("ADAPTER GET VIEW", value!!.title)
         return view
     }
 }
