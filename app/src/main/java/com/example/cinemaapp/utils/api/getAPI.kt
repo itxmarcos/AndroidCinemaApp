@@ -1,13 +1,15 @@
-package com.example.cinemaapp.utils
+package com.example.cinemaapp.utils.api
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cinemaapp.R
-import com.example.cinemaapp.utils.model.Actor
-import com.example.cinemaapp.utils.model.Genre
-import com.example.cinemaapp.utils.model.Movie
+import com.example.cinemaapp.utils.CustomAdapterMovies
+import com.example.cinemaapp.utils.data_model.Actor
+import com.example.cinemaapp.utils.data_model.Genre
+import com.example.cinemaapp.utils.data_model.Movie
 import com.google.gson.Gson
+import org.json.JSONObject
 import java.io.BufferedInputStream
 import java.io.BufferedReader
 import java.io.InputStream
@@ -17,7 +19,8 @@ import java.net.URL
 
 const val SERVER= "http://10.0.2.2"
 
-class MainActivity: AppCompatActivity() {
+object getAPI: AppCompatActivity() {
+    lateinit var movies: Array<Movie>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,24 +48,22 @@ class MainActivity: AppCompatActivity() {
                 val jsonStringMovies = readStream(inputStreamMovie)
                 val jsonStringGenres = readStream(inputStreamGenre)
 
-
                 val gson = Gson()
 
                 val actors = gson.fromJson(jsonStringActors, Array<Actor>::class.java)
-                Log.e("CONTENT: ", actors.map{
+                /*Log.e("CONTENT: ", actors.map{
                     it.toString()
-                }.toString()).toString()
+                }.toString()).toString()*/
 
-                val movies = gson.fromJson(jsonStringMovies, Array<Movie>::class.java)
-
+                movies = gson.fromJson(jsonStringMovies, Array<Movie>::class.java)
                 Log.e("CONTENT: ", movies.map{
                     it.toString()
                 }.toString()).toString()
 
                 val genres = gson.fromJson(jsonStringGenres, Array<Genre>::class.java)
-                Log.e("CONTENT: ", genres.map{
+                /*Log.e("CONTENT: ", genres.map{
                     it.toString()
-                }.toString()).toString()
+                }.toString()).toString()*/
 
             }
             finally {

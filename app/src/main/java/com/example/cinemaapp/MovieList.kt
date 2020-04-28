@@ -1,35 +1,42 @@
 package com.example.cinemaapp
 
-import android.os.Build.ID
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.content.Intent
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.cinemaapp.utils.model.Movie
 import kotlinx.android.synthetic.main.activity_movie_list.*
+import com.example.cinemaapp.utils.CustomAdapterMovies
+import com.example.cinemaapp.utils.api.getAPI.movies
+
+const val ID = "ID"
+const val EDIT_CODE = 27
 
 class MovieList : AppCompatActivity() {
-
-    lateinit var movie : Movie
+    lateinit var adapter: CustomAdapterMovies
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
-        val id = intent.getStringExtra(ID)
-        //movie = People.persons.first { it.id == id }
 
-        et1.setText(movie.title)
-        et2.setText(movie.id)
-        //et3.setText(movie.genres)
+        Log.e("CONTENT: ", movies.map{
+            it.toString()
+        }.toString()).toString()
 
-        et1.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                movie.title = et1.text.toString()
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+        adapter = CustomAdapterMovies(context = this, resourceId = R.layout.row_element_movie, items = movies)
+        movie_list.adapter = this.adapter
+        movie_list.setOnItemClickListener { parent, view, position, _ ->
+            val intent = Intent(this, ViewMovie::class.java)
+            val movie = movies[position]
+            intent.putExtra(ID, movie.id)
+            startActivityForResult(intent, EDIT_CODE)
+            adapter.getView(position, view, parent)
+            Log.d("RESULT", "Data updated")
+        }
+    }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-
-        })
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == EDIT_CODE)
+            adapter.notifyDataSetChanged()
     }
 }

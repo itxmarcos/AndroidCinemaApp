@@ -6,16 +6,19 @@
     tools:context=".MovieList"
     android:orientation="vertical"
     tools:ignore="MissingDefaultResource">
-    <EditText
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/et1" android:inputType="" android:hint="id"/>
-    <EditText
+        android:layout_height="150dp"
+        android:text="Movie List"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_dark"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/movie_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/et2" android:inputType="" android:hint="title"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/et3" android:inputType="" android:hint="genre"/>
+        android:layout_height="500dp" />
 </LinearLayout>

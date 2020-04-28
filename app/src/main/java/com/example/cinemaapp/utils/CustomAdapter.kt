@@ -7,20 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.example.cinemaapp.utils.model.Movie
+import com.example.cinemaapp.utils.data_model.Movie
 import kotlinx.android.synthetic.main.row_element_movie.view.*
 
 class CustomAdapterMovies : ArrayAdapter<Movie> {
     val resourceId: Int
     class ViewHolder {
-        lateinit var idMovie : TextView
         lateinit var titleMovie : TextView
-        lateinit var genreMovie : TextView
     }
 
-    constructor(context: Context, resourceId: Int, items: MutableList<Movie>) : super(context, resourceId, items) {
+    //items antes era una MutableList
+    constructor(context: Context, resourceId: Int, items: Array<Movie>) : super(context, resourceId, items) {
         this.resourceId = resourceId
     }
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
         val timestamp = System.currentTimeMillis()
@@ -28,19 +28,14 @@ class CustomAdapterMovies : ArrayAdapter<Movie> {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             view = inflater.inflate(resourceId, null)
             Log.d("ADAPTER NEW VIEW", "New view ${System.currentTimeMillis() - timestamp}")
-            val viewHolder =
-                ViewHolder()
-            viewHolder.idMovie = view.idMovie as TextView
+            val viewHolder = ViewHolder()
             viewHolder.titleMovie = view.titleMovie as TextView
-            viewHolder.genreMovie = view.genreMovie as TextView
         } else {
             Log.d("ADAPTER REUSED VIEW", "Reused view ${System.currentTimeMillis() - timestamp}")
         }
         val value = getItem(position)
         val holder = view!!.tag as ViewHolder
-        holder.idMovie.text = "T1 ${value!!.id}"
         holder.titleMovie.text = "T2 ${value!!.title}"
-        holder.genreMovie.text = "T2 ${value!!.genres}"
         Log.d("ADAPTER GET VIEW", value!!.title)
         return view
     }
