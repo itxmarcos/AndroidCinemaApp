@@ -16,8 +16,7 @@ class CustomAdapterMovies : ArrayAdapter<Movie> {
         lateinit var titleMovie : TextView
     }
 
-    //items antes era una MutableList
-    constructor(context: Context, resourceId: Int, items: Array<Movie>) : super(context, resourceId, items) {
+    constructor(context: Context, resourceId: Int, items: MutableList<Movie>) : super(context, resourceId, items) {
         this.resourceId = resourceId
     }
 

@@ -19,12 +19,11 @@ import java.net.URL
 
 const val SERVER= "http://10.0.2.2"
 
-object getAPI: AppCompatActivity() {
+object getAPI {
     lateinit var movies: Array<Movie>
+    lateinit var datos: MutableList<Movie>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    fun getDataFromAPI(){
 
         Thread(Runnable {
             //user=test&pass=1234 --> created from phpMyAdmin, not valid
@@ -55,10 +54,11 @@ object getAPI: AppCompatActivity() {
                     it.toString()
                 }.toString()).toString()*/
 
-                movies = gson.fromJson(jsonStringMovies, Array<Movie>::class.java)
+                val movies = gson.fromJson(jsonStringMovies, Array<Movie>::class.java)
                 Log.e("CONTENT: ", movies.map{
                     it.toString()
                 }.toString()).toString()
+                datos=movies.toMutableList()
 
                 val genres = gson.fromJson(jsonStringGenres, Array<Genre>::class.java)
                 /*Log.e("CONTENT: ", genres.map{
