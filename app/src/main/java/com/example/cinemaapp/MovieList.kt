@@ -8,7 +8,9 @@ import kotlinx.android.synthetic.main.activity_movie_list.*
 import com.example.cinemaapp.utils.CustomAdapterMovies
 import com.example.cinemaapp.utils.api.ApiClient
 import com.example.cinemaapp.utils.data_model.Movie
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 const val ID = "ID"
 const val EDIT_CODE = 27
@@ -16,21 +18,25 @@ const val EDIT_CODE = 27
 class MovieList : AppCompatActivity() {
     lateinit var adapter: CustomAdapterMovies
 
+    val movies by lazy {
+        runBlocking{
+            init()
+        }
+    }
+
+    suspend fun init() : MutableList<Movie> {
+        var result = mutableListOf<Movie>()
+        withContext(Dispatchers.IO) {
+            result.addAll(ApiClient.movies)
+        }
+        return result
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
 
-        val corroutine by lazy {
-            runBlocking{
-                init()
-            }
-        }
-    }
-
-    suspend fun init(): MutableList<Movie> {
-        val value = ApiClient.movies
-        runOnUiThread {
-            adapter = CustomAdapterMovies(context = this@MovieList, resourceId = R.layout.row_element_movie, items = value)
+            adapter = CustomAdapterMovies(context = this@MovieList, resourceId = R.layout.row_element_movie, items = movies)
             movie_list.adapter = this@MovieList.adapter
             movie_list.setOnItemClickListener { _, _, _, _ ->
                 Toast.makeText(this@MovieList, "Bye", Toast.LENGTH_LONG).show()
@@ -39,9 +45,9 @@ class MovieList : AppCompatActivity() {
                 Toast.makeText(this@MovieList, "Hi", Toast.LENGTH_LONG).show()
                 return@setOnItemLongClickListener true
             }
-        }
-        return value
+
     }
+
 
     fun updateUI() {
         val adapter = movie_list.adapter as CustomAdapterMovies

@@ -10,6 +10,8 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 const val REMOTE = "https://movies-api-v2.000webhostapp.com"
+const val USER = "mobile"
+const val PASS = "apps"
 
 object ApiClient {
 
@@ -19,12 +21,12 @@ object ApiClient {
 
     fun loadMovies() : MutableList<Movie> {
 
-        var urlMovie = URL("$REMOTE/mobile/user/getMovies.php?user=test2&pass=1234")
+        var urlMovie = URL("$REMOTE/mobile/user/getMovies.php?user=$USER&pass=$PASS")
         var urlConnectionMovie = urlMovie.openConnection() as HttpURLConnection
         val inputStreamMovie = BufferedInputStream(urlConnectionMovie.inputStream)
 
         val gson = Gson()
-        val jsonStringMovies = getAPI.readStream(inputStreamMovie)
+        val jsonStringMovies = readStream(inputStreamMovie)
         val array = gson.fromJson(jsonStringMovies, Array<Movie>::class.java)
         urlConnectionMovie.disconnect()
         val mutableList = mutableListOf<Movie>()
