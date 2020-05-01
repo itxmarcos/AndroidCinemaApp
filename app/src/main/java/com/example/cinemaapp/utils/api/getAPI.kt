@@ -1,15 +1,10 @@
 package com.example.cinemaapp.utils.api
 
-import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import com.example.cinemaapp.R
-import com.example.cinemaapp.utils.CustomAdapterMovies
 import com.example.cinemaapp.utils.data_model.Actor
 import com.example.cinemaapp.utils.data_model.Genre
 import com.example.cinemaapp.utils.data_model.Movie
 import com.google.gson.Gson
-import org.json.JSONObject
 import java.io.BufferedInputStream
 import java.io.BufferedReader
 import java.io.InputStream
