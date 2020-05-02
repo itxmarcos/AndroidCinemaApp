@@ -47,10 +47,6 @@ class MovieList : AppCompatActivity() {
             return@setOnItemLongClickListener true
         }
 
-        val fab: View = findViewById(R.id.add)
-        fab.setOnClickListener { view ->
-
-        }
     }
 
 
