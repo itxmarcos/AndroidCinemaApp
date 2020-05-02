@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:text="Movie List"
         android:textAlignment="center"
         android:textColor="@android:color/background_dark"
@@ -20,5 +20,14 @@
     <ListView
         android:id="@+id/movie_list"
         android:layout_width="match_parent"
-        android:layout_height="500dp" />
+        android:layout_height="wrap_content" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_my_icon"
+        android:contentDescription="Add a new movie"
+        android:layout_margin="16dp" />
 </LinearLayout>

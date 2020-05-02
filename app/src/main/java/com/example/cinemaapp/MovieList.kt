@@ -2,6 +2,7 @@ package com.example.cinemaapp
 
 import android.os.Bundle
 import android.content.Intent
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_movie_list.*
@@ -36,16 +37,20 @@ class MovieList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
 
-            adapter = CustomAdapterMovies(context = this@MovieList, resourceId = R.layout.row_element_movie, items = movies)
-            movie_list.adapter = this@MovieList.adapter
-            movie_list.setOnItemClickListener { _, _, _, _ ->
-                Toast.makeText(this@MovieList, "Bye", Toast.LENGTH_LONG).show()
-            }
-            movie_list.setOnItemLongClickListener { parent, view, position, id ->
-                Toast.makeText(this@MovieList, "Hi", Toast.LENGTH_LONG).show()
-                return@setOnItemLongClickListener true
-            }
+        adapter = CustomAdapterMovies(context = this@MovieList, resourceId = R.layout.row_element_movie, items = movies)
+        movie_list.adapter = this@MovieList.adapter
+        movie_list.setOnItemClickListener { _, _, _, _ ->
+            Toast.makeText(this@MovieList, "Short click", Toast.LENGTH_LONG).show()
+        }
+        movie_list.setOnItemLongClickListener { parent, view, position, id ->
+            Toast.makeText(this@MovieList, "Long click", Toast.LENGTH_LONG).show()
+            return@setOnItemLongClickListener true
+        }
 
+        val fab: View = findViewById(R.id.add)
+        fab.setOnClickListener { view ->
+
+        }
     }
 
 
