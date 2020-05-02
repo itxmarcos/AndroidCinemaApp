@@ -5,12 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.cinemaapp.multiselectionspinner.MultiSelectionSpinnerDialog
-import com.anurag.multiselectionspinner.MultiSpinner
+import com.multiselectionspinner.src.main.java.com.anurag.multiselectionspinner.MultiSpinner
+import com.multiselectionspinner.src.main.java.com.anurag.multiselectionspinner.MultiSelectionSpinnerDialog
 
-class AddMovie : AppCompatActivity() {
 
-    MultiSelectionSpinnerDialog.OnMultiSpinnerSelectionListener {
+class AddMovie : AppCompatActivity(), MultiSelectionSpinnerDialog.OnMultiSpinnerSelectionListener {
 
         @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
         override fun onCreate(savedInstanceState: Bundle?) {
