@@ -29,6 +29,7 @@ class CustomAdapterMovies : ArrayAdapter<Movie> {
             Log.d("ADAPTER NEW VIEW", "New view ${System.currentTimeMillis() - timestamp}")
             val viewHolder = ViewHolder()
             viewHolder.titleMovie = view.titleMovie as TextView
+            view.setTag(viewHolder)
         } else {
             Log.d("ADAPTER REUSED VIEW", "Reused view ${System.currentTimeMillis() - timestamp}")
         }
