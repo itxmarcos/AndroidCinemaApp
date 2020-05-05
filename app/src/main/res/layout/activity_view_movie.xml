@@ -10,21 +10,122 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
         android:text="View Movie"
         android:textAlignment="center"
         android:textSize="36sp"
         android:textStyle="bold" />
-    <EditText
+
+    <TextView
+        android:id="@+id/textView9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et1" android:inputType="" android:hint="title"/>
-    <EditText
+        android:fontFamily="@font/roboto_medium"
+        android:text="Title" />
+
+    <TextView
+        android:id="@+id/txt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et2" android:inputType="" android:hint="description"/>
-    <EditText
+        android:inputType=""
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et3" android:inputType="" android:hint="director"/>
+        android:fontFamily="@font/roboto_medium"
+        android:text="Description" />
+
+    <TextView
+        android:id="@+id/txt_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType=""
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Director" />
+
+    <TextView
+        android:id="@+id/txt_director"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType=""
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Year" />
+
+    <TextView
+        android:id="@+id/txt_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType=""
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Length" />
+
+    <TextView
+        android:id="@+id/txt_length"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType=""
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Rating" />
+
+    <TextView
+        android:id="@+id/txt_rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType=""
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Votes" />
+
+    <TextView
+        android:id="@+id/txt_votes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType=""
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Revenue" />
+
+    <TextView
+        android:id="@+id/txt_revenue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType=""
+        android:textSize="18sp" />
 </LinearLayout>

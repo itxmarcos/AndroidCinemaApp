@@ -1,5 +1,6 @@
 package com.example.cinemaapp.utils.api
 
+import android.util.Log
 import com.example.cinemaapp.utils.data_model.Movie
 import com.google.gson.Gson
 import java.io.BufferedInputStream
@@ -20,7 +21,6 @@ object ApiClient {
     }
 
     fun loadMovies() : MutableList<Movie> {
-
         var urlMovie = URL("$REMOTE/mobile/user/getMovies.php?user=$USER&pass=$PASS")
         var urlConnectionMovie = urlMovie.openConnection() as HttpURLConnection
         val inputStreamMovie = BufferedInputStream(urlConnectionMovie.inputStream)
