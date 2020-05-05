@@ -22,12 +22,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="Title" />
+        android:text="Title"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
         android:inputType=""
         android:textSize="18sp" />
 
@@ -36,12 +38,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="Description" />
+        android:text="Description"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
         android:inputType=""
         android:textSize="18sp" />
 
@@ -50,12 +54,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="Director" />
+        android:text="Director"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_director"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
         android:inputType=""
         android:textSize="18sp" />
 
@@ -64,12 +70,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="Year" />
+        android:text="Year"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
         android:inputType=""
         android:textSize="18sp" />
 
@@ -78,12 +86,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="Length" />
+        android:text="Length"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_length"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
         android:inputType=""
         android:textSize="18sp" />
 
@@ -92,12 +102,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="Rating" />
+        android:text="Rating"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_rating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
         android:inputType=""
         android:textSize="18sp" />
 
@@ -106,12 +118,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="Votes" />
+        android:text="Votes"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_votes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
         android:inputType=""
         android:textSize="18sp" />
 
@@ -120,12 +134,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="Revenue" />
+        android:text="Revenue"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_revenue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:inputType=""
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Actors"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_actors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:inputType=""
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Genres"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_genres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
         android:inputType=""
         android:textSize="18sp" />
 </LinearLayout>

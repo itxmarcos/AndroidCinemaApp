@@ -7,26 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.example.cinemaapp.utils.data_model.Actor
+import com.example.cinemaapp.utils.data_model.Genre
 import com.example.cinemaapp.utils.data_model.Movie
-import kotlinx.android.synthetic.main.row_element_movie.view.*
+import kotlinx.android.synthetic.main.activity_view_movie.view.*
+import kotlinx.android.synthetic.main.row_element.view.*
+import kotlinx.android.synthetic.main.row_element.view.textView
 
-class CustomAdapterGenre : ArrayAdapter<Movie> {
+class CustomAdapterGenre : ArrayAdapter<Genre> {
     val resourceId: Int
 
     class ViewHolder {
-        lateinit var titleMovie : TextView
-        lateinit var descriptionMovie : TextView
-        lateinit var directorMovie : TextView
-        lateinit var yearMovie : TextView
-        lateinit var lengthMovie : TextView
-        lateinit var ratingMovie : TextView
-        lateinit var votesMovie : TextView
-        lateinit var revenueMovie : TextView
-        lateinit var genresMovie : TextView
-        lateinit var actorsMovie : TextView
+        lateinit var nameGenre : TextView
     }
 
-    constructor(context: Context, resourceId: Int, items: MutableList<Movie>) : super(context, resourceId, items) {
+    constructor(context: Context, resourceId: Int, items: MutableList<Genre>) : super(context, resourceId, items) {
         this.resourceId = resourceId
     }
 
@@ -36,14 +31,14 @@ class CustomAdapterGenre : ArrayAdapter<Movie> {
         view = inflater.inflate(resourceId, null)
 
         val viewHolder = ViewHolder()
-        viewHolder.titleMovie = view.titleMovie as TextView
+        viewHolder.nameGenre= view.textView as TextView
         //viewHolder.descriptionMovie = view.descriptionMovie as TextView
 
         view.setTag(viewHolder)
         val value = getItem(position)
         val holder = view!!.tag as ViewHolder
-        holder.titleMovie.text = "${value!!.title}"
-        Log.d("ADAPTER GET VIEW", value!!.title)
+        holder.nameGenre.text = "${value!!.name}"
+        Log.d("ADAPTER GET VIEW", value!!.name)
         return view
     }
 }

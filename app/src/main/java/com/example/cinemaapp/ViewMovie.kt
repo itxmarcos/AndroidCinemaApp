@@ -20,17 +20,7 @@ class ViewMovie : AppCompatActivity() {
         txt_rating.setText(intent.getStringExtra("Rating"))
         txt_votes.setText(intent.getStringExtra("Votes"))
         txt_revenue.setText(intent.getStringExtra("Revenue"))
-
-        //Esto no se muy bien qué hace
-        txt_title.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                title = txt_title.text.toString()
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-
-        })
+        txt_actors.setText(intent.getStringExtra("Actors"))
+        txt_genres.setText(intent.getStringExtra("Genres"))
     }
 }
