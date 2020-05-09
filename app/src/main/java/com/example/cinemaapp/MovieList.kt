@@ -15,6 +15,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
+//const val ID = "ID"
+const val EDIT_CODE = 27
+
 class MovieList : AppCompatActivity() {
     lateinit var adapter: CustomAdapterMovie
 
@@ -68,10 +71,25 @@ class MovieList : AppCompatActivity() {
         movie_list.adapter = this@MovieList.adapter
         movie_list.setOnItemClickListener { parent, view, position, id ->
             val movie = movies[position]
-            val actorsMovie = mutableListOf<String>()
 
+            Log.e("CONTENT: ", actors[0].name.map{
+                it.toString()
+            }.toString())
+
+            val actorsAux = mutableListOf<String>()
             for (i in movie.actors) {
-                actorsMovie[i] = actors[movie.actors[i]]
+                val actor = actors.filter {
+                    it.id==i
+                }
+                actorsAux.add(actors[i].name)
+            }
+
+            val genresAux = mutableListOf<String>()
+            for (i in movie.genres) {
+                val actor = genres.filter {
+                    it.id==i
+                }
+                genresAux.add(genres[i].name)
             }
 
             val intent = Intent(this@MovieList, ViewMovie::class.java)
@@ -82,17 +100,26 @@ class MovieList : AppCompatActivity() {
             intent.putExtra("Rating", movie.rating.toString())
             intent.putExtra("Votes", movie.votes.toString())
             intent.putExtra("Revenue", movie.revenue.toString())
-            intent.putExtra("Length", movie.length.toString())
-            intent.putExtra("Actors", actorsMovie.toString())
-            intent.putExtra("Genres", movie.genres.toString())
+            intent.putExtra("Length", movie.runtime.toString())
+            intent.putExtra("Actors", actorsAux.toString())
+            intent.putExtra("Genres", genresAux.toString())
             startActivity(intent)
             adapter.getView(position, view, parent)
             Log.d("RESULT", "Data updated")
         }
         movie_list.setOnItemLongClickListener { parent, view, position, id ->
             Toast.makeText(this@MovieList, "Long click", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, EditMovie::class.java)
+            startActivityForResult(intent, EDIT_CODE)
+            adapter.getView(position, view, parent)
             return@setOnItemLongClickListener true
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == EDIT_CODE)
+            adapter.notifyDataSetChanged()
     }
 
     /*fun updateUI() {
