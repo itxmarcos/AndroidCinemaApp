@@ -20,12 +20,6 @@ class GenresView : AppCompatActivity() {
         }
     }
 
-    val genres by lazy {
-        runBlocking{
-            initGenres()
-        }
-    }
-
     suspend fun initMovies() : MutableList<Movie> {
         var result = mutableListOf<Movie>()
         withContext(Dispatchers.IO) {
@@ -34,20 +28,29 @@ class GenresView : AppCompatActivity() {
         return result
     }
 
-    suspend fun initGenres() : MutableList<Genre> {
-        var myGenres = mutableListOf<Genre>()
-        withContext(Dispatchers.IO) {
-            myGenres.addAll(ApiClient.genres)
-        }
-        return myGenres
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_genres_view)
 
+        val id = intent.getStringExtra(ID)
+        /*movie = ApiClient.movies.first { it.id == id }
+
+        for (i in movie.actors) {
+            val actor = actors.filter {
+                it.id==i
+            }
+            actorsAux.add(actors[i])
+        }
+
+        for (i in movie.genres) {
+            val genre = genres.filter {
+                it.id==i
+            }
+            genresAux.add(genres[i])
+        }
+
         adapter = CustomAdapterGenre(context = this@GenresView, resourceId = R.layout.row_element, items = genres)
-        genres_list.adapter = this@GenresView.adapter
+        genres_list.adapter = this@GenresView.adapter*/
 
         //Faltaría ver a qué películas pertenece cada género
 

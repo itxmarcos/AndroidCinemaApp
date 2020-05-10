@@ -20,8 +20,8 @@ class EditMovie : AppCompatActivity() {
         txt_rating.setText(intent.getStringExtra("Rating"))
         txt_votes.setText(intent.getStringExtra("Votes"))
         txt_revenue.setText(intent.getStringExtra("Revenue"))
-        txt_actors.setText(intent.getStringExtra("Actors"))
-        txt_genres.setText(intent.getStringExtra("Genres"))
+        //txt_actors.setText(intent.getStringExtra("Actors"))
+        //txt_genres.setText(intent.getStringExtra("Genres"))
 
         //Esto se supone que es para cuando cambie el texto que sea consciente de ello
         txt_title.addTextChangedListener(object : TextWatcher {

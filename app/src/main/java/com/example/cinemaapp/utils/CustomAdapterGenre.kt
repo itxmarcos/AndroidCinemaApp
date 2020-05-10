@@ -32,7 +32,6 @@ class CustomAdapterGenre : ArrayAdapter<Genre> {
 
         val viewHolder = ViewHolder()
         viewHolder.nameGenre= view.textView as TextView
-        //viewHolder.descriptionMovie = view.descriptionMovie as TextView
 
         view.setTag(viewHolder)
         val value = getItem(position)

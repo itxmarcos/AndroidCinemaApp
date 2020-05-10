@@ -28,7 +28,6 @@ class CustomAdapterMovie : ArrayAdapter<Movie> {
 
         val viewHolder = ViewHolder()
         viewHolder.titleMovie = view.textView as TextView
-        //viewHolder.descriptionMovie = view.descriptionMovie as TextView
 
         view.setTag(viewHolder)
         val value = getItem(position)

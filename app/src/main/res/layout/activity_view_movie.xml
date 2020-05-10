@@ -146,20 +146,17 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/txt_17"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
         android:text="Actors"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txt_actors"
+    <ListView
+        android:id="@+id/list_actors"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_medium"
-        android:inputType=""
-        android:textSize="18sp" />
+        android:layout_height="62dp" />
 
     <TextView
         android:id="@+id/textView8"
@@ -169,11 +166,9 @@
         android:text="Genres"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txt_genres"
+    <ListView
+        android:id="@+id/list_genres"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_medium"
-        android:inputType=""
-        android:textSize="18sp" />
+        android:layout_height="63dp" />
+
 </LinearLayout>

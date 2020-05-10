@@ -15,6 +15,10 @@ const val REMOTE = "https://movies-api-v2.000webhostapp.com"
 const val USER = "mobile"
 const val PASS = "apps"
 
+/**
+ * Objeto singleton que nos permite acceder a los elementos almacenados en él desde cualquier parte de
+ * nuestra aplicación.
+ */
 object ApiClient {
 
     val movies : MutableList<Movie> by lazy {
