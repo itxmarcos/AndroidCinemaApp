@@ -16,7 +16,8 @@
         <activity android:name=".AddMovie" />
         <activity android:name=".EditMovie" />
         <activity android:name=".Contact" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -47,7 +47,5 @@ class ActorsView : AppCompatActivity() {
 
         adapter = CustomAdapterMovie(context = this@ActorsView, resourceId = R.layout.row_element, items = moviesAux)
         movies_list.adapter = this@ActorsView.adapter
-
-        //Faltaría ver a qué películas pertenece cada actor
     }
 }
