@@ -2,11 +2,8 @@ package com.example.cinemaapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.cinemaapp.utils.CustomAdapterActor
 import com.example.cinemaapp.utils.CustomAdapterMovie
 import com.example.cinemaapp.utils.api.ApiClient
-import com.example.cinemaapp.utils.api.ApiClient.actors
-import com.example.cinemaapp.utils.data_model.Actor
 import com.example.cinemaapp.utils.data_model.Movie
 import kotlinx.android.synthetic.main.activity_actors_view.*
 import kotlinx.coroutines.Dispatchers
@@ -46,6 +43,6 @@ class ActorsView : AppCompatActivity() {
         }
 
         adapter = CustomAdapterMovie(context = this@ActorsView, resourceId = R.layout.row_element, items = moviesAux)
-        movies_list.adapter = this@ActorsView.adapter
+        movies_list_actors.adapter = this@ActorsView.adapter
     }
 }

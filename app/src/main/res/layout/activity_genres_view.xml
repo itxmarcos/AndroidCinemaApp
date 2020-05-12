@@ -18,7 +18,7 @@
         android:textStyle="bold" />
 
     <ListView
-        android:id="@+id/genres_list"
+        android:id="@+id/movies_list_genres"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

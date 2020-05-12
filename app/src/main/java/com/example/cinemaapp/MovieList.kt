@@ -66,7 +66,8 @@ class MovieList : AppCompatActivity() {
 
         val fab: View = findViewById(R.id.fab)
         fab.setOnClickListener {view ->
-            Toast.makeText(this@MovieList, "FAB is clicked...", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, AddMovie::class.java)
+            startActivity(intent)
         }
     }
 

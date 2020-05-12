@@ -46,6 +46,6 @@ class GenresView : AppCompatActivity() {
         }
 
         adapter = CustomAdapterMovie(context = this@GenresView, resourceId = R.layout.row_element, items = moviesAux)
-        movies_list.adapter = this@GenresView.adapter
+        movies_list_genres.adapter = this@GenresView.adapter
     }
 }

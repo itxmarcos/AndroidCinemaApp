@@ -18,7 +18,7 @@ tools:ignore="MissingDefaultResource">
     android:textStyle="bold" />
 
 <ListView
-    android:id="@+id/movies_list"
+    android:id="@+id/movies_list_actors"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 
