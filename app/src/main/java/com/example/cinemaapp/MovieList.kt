@@ -1,9 +1,8 @@
 package com.example.cinemaapp
 
-import android.content.Context
 import android.os.Bundle
 import android.content.Intent
-import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -63,6 +62,11 @@ class MovieList : AppCompatActivity() {
         contact.setOnClickListener {
             val intent = Intent(this, Contact::class.java);
             startActivity(intent)
+        }
+
+        val fab: View = findViewById(R.id.fab)
+        fab.setOnClickListener {view ->
+            Toast.makeText(this@MovieList, "FAB is clicked...", Toast.LENGTH_SHORT).show()
         }
     }
 
