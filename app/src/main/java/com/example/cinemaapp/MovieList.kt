@@ -53,6 +53,8 @@ class MovieList : AppCompatActivity() {
         movie_list.setOnItemLongClickListener { parent, view, position, id ->
             Toast.makeText(this@MovieList, "Long click", Toast.LENGTH_LONG).show()
             val intent = Intent(this@MovieList, EditMovie::class.java)
+            val movie = movies[position]
+            intent.putExtra(ID, movie.id)
             startActivityForResult(intent, EDIT_CODE)
             adapter.getView(position, view, parent)
             return@setOnItemLongClickListener true

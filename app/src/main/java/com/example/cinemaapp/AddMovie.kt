@@ -1,37 +1,117 @@
 package com.example.cinemaapp
 
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import androidx.annotation.RequiresApi
-import kotlinx.android.synthetic.main.activity_view_movie.*
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Button
+import android.widget.Spinner
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.example.cinemaapp.utils.CustomAdapterActor
+import com.example.cinemaapp.utils.CustomAdapterGenre
+import com.example.cinemaapp.utils.api.ApiClient
+import com.example.cinemaapp.utils.data_model.Actor
+import com.example.cinemaapp.utils.data_model.Genre
+import com.example.cinemaapp.utils.data_model.Movie
+import kotlinx.android.synthetic.main.activity_add_movie.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
 
+const val REMOTE = "https://movies-api-v2.000webhostapp.com"
+const val USER = "mobile"
+const val PASS = "apps"
 
 class AddMovie : AppCompatActivity() {
+    lateinit var spinnerActors : Spinner
+    lateinit var spinnerGenres : Spinner
+
+    val movies by lazy {
+        runBlocking{
+            initMovies()
+        }
+    }
+
+    val actors by lazy {
+        runBlocking{
+            initActors()
+        }
+    }
+
+    val genres by lazy {
+        runBlocking{
+            initGenres()
+        }
+    }
+
+    suspend fun initMovies() : MutableList<Movie> {
+        var result = mutableListOf<Movie>()
+        withContext(Dispatchers.IO) {
+            result.addAll(ApiClient.movies)
+        }
+        return result
+    }
+
+    suspend fun initActors() : MutableList<Actor> {
+        var myActors = mutableListOf<Actor>()
+        withContext(Dispatchers.IO) {
+            myActors.addAll(ApiClient.actors)
+        }
+        return myActors
+    }
+
+    suspend fun initGenres() : MutableList<Genre> {
+        var myGenres = mutableListOf<Genre>()
+        withContext(Dispatchers.IO) {
+            myGenres.addAll(ApiClient.genres)
+        }
+        return myGenres
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_movie)
 
-        //Esto se suponque que es para cuando cambie el texto que sea consciente de ello
-        txt_title.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                title = txt_title.text.toString()
+        var myActorId = ""
+        spinnerActors = findViewById(R.id.spinner_actors) as Spinner
+        spinnerActors.adapter = CustomAdapterActor(context = this@AddMovie, resourceId = R.layout.row_element, items = actors)
+        spinnerActors.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                myActorId = actors[position].id
+            }
+        }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+        var myGenreId = ""
+        spinnerGenres = findViewById(R.id.spinner_genres) as Spinner
+        spinnerGenres.adapter = CustomAdapterGenre(context = this@AddMovie, resourceId = R.layout.row_element, items = genres)
+        spinnerGenres.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
 
-        })
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                myGenreId = genres[position].id
+            }
+        }
+
+        var movieEdited = """{"id": """" + (movies.count()+1).toString() + """","title": """" + txt_title.text + """","description": """" + txt_description.text + """","director": """" + txt_director.text + """","year": """" + txt_year.text + """","runtime": """" + txt_length.text + """","rating": """" + txt_rating.text + """","votes": """" + txt_votes.text + """","revenue": """" + txt_revenue.text + """","genres": ["""" + myGenreId + """"],"actors": ["""" + myActorId + """"]}"""
+        val urlMovie ="$REMOTE/mobile/user/getMovies.php?user=$USER&pass=$PASS"
+
+        btn_add_movie.setOnClickListener {
+            post(urlMovie, movieEdited)
+            val intent = Intent(this, MainActivity::class.java);
+            startActivity(intent)
+        }
     }
 
     fun post(url: String, body: String): String {
@@ -61,4 +141,73 @@ class AddMovie : AppCompatActivity() {
                 }
             }
     }
+
+    /*fun createJsonMovie(movie: Movie): String{
+    var json = JSONObject()
+    json.put("movie", addMovie(movie))
+    return json.toString()
+    /*val actors = listOf<Actor>(
+        Actor("355", "Gerard Butler"),
+        Actor("201", "Aaron Eckhart"),
+        Actor("741", "Morgan Freeman"),
+        Actor("1018", "Angela Bassett")
+    )
+    json.put("actors", addActors(actors))*/
+
+    /*val genres = listOf<Genre>(
+        Genre("1", "Action"),
+        Genre("16", "Crime"),
+        Genre("11", "Drama")
+    )*/
+
+    //saveJson(json.toString())
+    }
+
+    private fun addMovie(movie: Movie): JSONObject {
+        return JSONObject()
+            .put("id", movie.id)
+            .put("title", movie.title)
+            .put("description", movie.description)
+            .put("director", movie.director)
+            .put("year", movie.year)
+            .put("runtime", movie.runtime)
+            .put("rating", movie.rating)
+            .put("votes", movie.votes)
+            .put("revenue", movie.revenue)
+            .put("genres", movie.genres)
+            .put("actors", movie.actors)
+    }
+
+    private fun addActors(actors: List<Actor>): JSONArray {
+        var actorsJson = JSONArray()
+        actors.forEach {
+            actorsJson.put(
+                JSONArray()
+                    .put(it.id)
+                    .put(it.name)
+            )
+        }
+        return actorsJson
+    }*/
+
+    /*private fun saveJson(jsonString: String) {
+        val output: Writer
+        var file = createFile()
+        output = BufferedWriter(FileWriter(file))
+        output.write(jsonString)
+        output.close()
+    }
+
+    private fun createFile(): File {
+        val fileName = "myJson"
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        if(!storageDir!!.exists()) {
+            storageDir.mkdir()
+        }
+        return File.createTempFile(
+            fileName,
+            ".json",
+            storageDir
+        )
+    }*/
 }
