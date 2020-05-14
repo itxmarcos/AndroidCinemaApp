@@ -1,22 +1,12 @@
 package com.example.cinemaapp
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.View
-import android.widget.AdapterView
 import android.widget.Spinner
-import com.example.cinemaapp.utils.CustomAdapterActor
-import com.example.cinemaapp.utils.CustomAdapterGenre
 import com.example.cinemaapp.utils.api.ApiClient
 import com.example.cinemaapp.utils.data_model.Actor
 import com.example.cinemaapp.utils.data_model.Genre
 import com.example.cinemaapp.utils.data_model.Movie
-import kotlinx.android.synthetic.main.activity_add_movie.*
-import kotlinx.android.synthetic.main.activity_edit_movie.*
-import kotlinx.android.synthetic.main.activity_view_movie.*
 import kotlinx.android.synthetic.main.activity_view_movie.txt_description
 import kotlinx.android.synthetic.main.activity_view_movie.txt_director
 import kotlinx.android.synthetic.main.activity_view_movie.txt_length
@@ -28,11 +18,6 @@ import kotlinx.android.synthetic.main.activity_view_movie.txt_year
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
-import java.net.HttpURLConnection
-import java.net.URL
 
 class EditMovie : AppCompatActivity() {
     lateinit var spinnerActors : Spinner
@@ -93,7 +78,7 @@ class EditMovie : AppCompatActivity() {
         txt_votes.setText(intent.getStringExtra("Votes"))
         txt_revenue.setText(intent.getStringExtra("Revenue"))
 
-        var myActorId = ""
+        /*var myActorId = ""
         spinnerActors = findViewById(R.id.spinner_actors) as Spinner
         spinnerActors.adapter = CustomAdapterActor(context = this@EditMovie, resourceId = R.layout.row_element, items = actors)
         spinnerActors.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -104,11 +89,11 @@ class EditMovie : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 myActorId = actors[position].id
             }
-        }
+        }*/
 
-        var myGenreId = ""
+        /*var myGenreId = ""
         spinnerGenres = findViewById(R.id.spinner_genres) as Spinner
-        spinnerGenres.adapter = CustomAdapterGenre(context = this@EditMovie, resourceId = R.layout.row_element, items = genres)
+        adapterGenre =  CustomAdapterGenre(context = this, genres = genres.toTypedArray())
         spinnerGenres.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
@@ -166,5 +151,6 @@ class EditMovie : AppCompatActivity() {
                     response.toString()
                 }
             }
+    }*/
     }
 }

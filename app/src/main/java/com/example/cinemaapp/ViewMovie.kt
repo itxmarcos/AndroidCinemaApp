@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cinemaapp.utils.CustomAdapterActor
-import com.example.cinemaapp.utils.CustomAdapterGenre
+import com.example.cinemaapp.utils.CustomAdapterSpinnerGenre
 import kotlinx.android.synthetic.main.activity_view_movie.*
 import com.example.cinemaapp.utils.api.ApiClient
 import com.example.cinemaapp.utils.data_model.Actor
@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 class ViewMovie : AppCompatActivity() {
     lateinit var movie : Movie
-    lateinit var adapterGenre: CustomAdapterGenre
+    lateinit var adapterSpinnerGenre: CustomAdapterSpinnerGenre
     lateinit var adapterActor: CustomAdapterActor
     var actorsAux = mutableListOf<Actor>()
     var genresAux = mutableListOf<Genre>()
@@ -87,14 +87,14 @@ class ViewMovie : AppCompatActivity() {
             startActivity(intentActor)
             adapterActor.getView(position, view, parent)
         }
-        adapterGenre = CustomAdapterGenre(context = this@ViewMovie, resourceId = R.layout.row_element, items = genresAux)
-        list_genres.adapter = this@ViewMovie.adapterGenre
+        adapterSpinnerGenre = CustomAdapterGenre(context = this@ViewMovie, resourceId = R.layout.row_element, items = genresAux)
+        list_genres.adapter = this@ViewMovie.adapterSpinnerGenre
         list_genres.setOnItemClickListener { parent, view, position, id ->
             val intentGenre = Intent(this, GenresView::class.java)
             val genre = genresAux[position]
             intentGenre.putExtra(ID, genre.id)
             startActivity(intentGenre)
-            adapterGenre.getView(position, view, parent)
+            adapterSpinnerGenre.getView(position, view, parent)
         }
 
         /*txt_title.addTextChangedListener(object : TextWatcher {

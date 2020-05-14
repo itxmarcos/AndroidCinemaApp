@@ -2,12 +2,9 @@ package com.example.cinemaapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.cinemaapp.utils.CustomAdapterGenre
 import com.example.cinemaapp.utils.CustomAdapterMovie
 import com.example.cinemaapp.utils.api.ApiClient
-import com.example.cinemaapp.utils.data_model.Genre
 import com.example.cinemaapp.utils.data_model.Movie
-import kotlinx.android.synthetic.main.activity_actors_view.*
 import kotlinx.android.synthetic.main.activity_genres_view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
