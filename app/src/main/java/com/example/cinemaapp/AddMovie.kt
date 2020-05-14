@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cinemaapp.utils.CustomAdapterActor
 import com.example.cinemaapp.utils.CustomAdapterGenre
+import com.example.cinemaapp.utils.CustomAdapterSpinnerGenre
 import com.example.cinemaapp.utils.api.ApiClient
 import com.example.cinemaapp.utils.data_model.Actor
 import com.example.cinemaapp.utils.data_model.Genre
@@ -31,7 +32,7 @@ const val PASS = "apps"
 class AddMovie : AppCompatActivity() {
     lateinit var spinnerActors : Spinner
     lateinit var spinnerGenres : Spinner
-    lateinit var adapterGenre: CustomAdapterGenre
+    lateinit var adapterSpinnerGenre: CustomAdapterSpinnerGenre
     lateinit var adapterActor: CustomAdapterActor
 
     val movies by lazy {
@@ -90,22 +91,22 @@ class AddMovie : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                adapterGenre.getView(position, view, parent)
+                //adapterActor.getView(position, view, parent)
                 myActorId = actors[position].id
             }
         }
 
         var myGenreId = ""
         spinnerGenres = findViewById(R.id.spinner_genres) as Spinner
-        adapterGenre =  CustomAdapterGenre(context = this@AddMovie, resourceId = R.layout.row_element, items = genres)
-        spinnerGenres.adapter = adapterGenre
+        adapterSpinnerGenre =  CustomAdapterSpinnerGenre(context = this@AddMovie, genres = genres.toTypedArray())
+        spinnerGenres.adapter = adapterSpinnerGenre
         spinnerGenres.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                adapterGenre.getView(position, view, parent)
+                //adapterSpinnerGenre.getView(position, view, parent)
                 myGenreId = genres[position].id
             }
         }
