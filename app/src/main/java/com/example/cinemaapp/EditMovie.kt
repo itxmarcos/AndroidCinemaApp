@@ -1,10 +1,33 @@
 package com.example.cinemaapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Spinner
+import com.example.cinemaapp.utils.CustomAdapterActor
+import com.example.cinemaapp.utils.CustomAdapterGenre
+import com.example.cinemaapp.utils.api.ApiClient
+import com.example.cinemaapp.utils.data_model.Actor
+import com.example.cinemaapp.utils.data_model.Genre
+import com.example.cinemaapp.utils.data_model.Movie
+import kotlinx.android.synthetic.main.activity_add_movie.*
+import kotlinx.android.synthetic.main.activity_edit_movie.*
 import kotlinx.android.synthetic.main.activity_view_movie.*
+import kotlinx.android.synthetic.main.activity_view_movie.txt_description
+import kotlinx.android.synthetic.main.activity_view_movie.txt_director
+import kotlinx.android.synthetic.main.activity_view_movie.txt_length
+import kotlinx.android.synthetic.main.activity_view_movie.txt_rating
+import kotlinx.android.synthetic.main.activity_view_movie.txt_revenue
+import kotlinx.android.synthetic.main.activity_view_movie.txt_title
+import kotlinx.android.synthetic.main.activity_view_movie.txt_votes
+import kotlinx.android.synthetic.main.activity_view_movie.txt_year
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
@@ -12,6 +35,50 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class EditMovie : AppCompatActivity() {
+    lateinit var spinnerActors : Spinner
+    lateinit var spinnerGenres : Spinner
+
+    val movies by lazy {
+        runBlocking{
+            initMovies()
+        }
+    }
+
+    val actors by lazy {
+        runBlocking{
+            initActors()
+        }
+    }
+
+    val genres by lazy {
+        runBlocking{
+            initGenres()
+        }
+    }
+
+    suspend fun initMovies() : MutableList<Movie> {
+        var result = mutableListOf<Movie>()
+        withContext(Dispatchers.IO) {
+            result.addAll(ApiClient.movies)
+        }
+        return result
+    }
+
+    suspend fun initActors() : MutableList<Actor> {
+        var myActors = mutableListOf<Actor>()
+        withContext(Dispatchers.IO) {
+            myActors.addAll(ApiClient.actors)
+        }
+        return myActors
+    }
+
+    suspend fun initGenres() : MutableList<Genre> {
+        var myGenres = mutableListOf<Genre>()
+        withContext(Dispatchers.IO) {
+            myGenres.addAll(ApiClient.genres)
+        }
+        return myGenres
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,11 +92,43 @@ class EditMovie : AppCompatActivity() {
         txt_rating.setText(intent.getStringExtra("Rating"))
         txt_votes.setText(intent.getStringExtra("Votes"))
         txt_revenue.setText(intent.getStringExtra("Revenue"))
-        //txt_actors.setText(intent.getStringExtra("Actors"))
-        //txt_genres.setText(intent.getStringExtra("Genres"))
+
+        var myActorId = ""
+        spinnerActors = findViewById(R.id.spinner_actors) as Spinner
+        spinnerActors.adapter = CustomAdapterActor(context = this@EditMovie, resourceId = R.layout.row_element, items = actors)
+        spinnerActors.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                myActorId = actors[position].id
+            }
+        }
+
+        var myGenreId = ""
+        spinnerGenres = findViewById(R.id.spinner_genres) as Spinner
+        spinnerGenres.adapter = CustomAdapterGenre(context = this@EditMovie, resourceId = R.layout.row_element, items = genres)
+        spinnerGenres.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                myGenreId = genres[position].id
+            }
+        }
+
+        var movieEdited = """{"id": """" + (movies.count()+1).toString() + """","title": """" + txt_title.text + """","description": """" + txt_description.text + """","director": """" + txt_director.text + """","year": """" + txt_year.text + """","runtime": """" + txt_length.text + """","rating": """" + txt_rating.text + """","votes": """" + txt_votes.text + """","revenue": """" + txt_revenue.text + """","genres": ["""" + myGenreId + """"],"actors": ["""" + myActorId + """"]}"""
+        val urlMovie ="$REMOTE/mobile/user/getMovies.php?user=$USER&pass=$PASS"
+        btn_save_changes.setOnClickListener {
+            post(urlMovie, movieEdited)
+            val intent = Intent(this, MainActivity::class.java);
+            startActivity(intent)
+        }
 
         //Esto se supone que es para cuando cambie el texto que sea consciente de ello
-        txt_title.addTextChangedListener(object : TextWatcher {
+        /*txt_title.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 title = txt_title.text.toString()
             }
@@ -38,7 +137,7 @@ class EditMovie : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
 
-        })
+        })*/
     }
 
     fun post(url: String, body: String): String {
