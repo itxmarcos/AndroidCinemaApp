@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
 import com.example.cinemaapp.utils.CustomAdapterActor
 import com.example.cinemaapp.utils.CustomAdapterGenre
+import com.example.cinemaapp.utils.CustomAdapterSpinnerActor
+import com.example.cinemaapp.utils.CustomAdapterSpinnerGenre
 import com.example.cinemaapp.utils.api.ApiClient
 import com.example.cinemaapp.utils.data_model.Actor
 import com.example.cinemaapp.utils.data_model.Genre
@@ -35,8 +38,11 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class EditMovie : AppCompatActivity() {
+    lateinit var movie : Movie
     lateinit var spinnerActors : Spinner
     lateinit var spinnerGenres : Spinner
+    lateinit var adapterSpinnerGenre: CustomAdapterSpinnerGenre
+    lateinit var adapterSpinnerActor: CustomAdapterSpinnerActor
 
     val movies by lazy {
         runBlocking{
@@ -84,18 +90,22 @@ class EditMovie : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_movie)
 
-        txt_title.setText(intent.getStringExtra("Title"))
-        txt_description.setText(intent.getStringExtra("Description"))
-        txt_director.setText(intent.getStringExtra("Director"))
-        txt_year.setText(intent.getStringExtra("Year"))
-        txt_length.setText(intent.getStringExtra("Length"))
-        txt_rating.setText(intent.getStringExtra("Rating"))
-        txt_votes.setText(intent.getStringExtra("Votes"))
-        txt_revenue.setText(intent.getStringExtra("Revenue"))
+        val id = intent.getStringExtra(ID)
+        movie = ApiClient.movies.first { it.id == id }
+
+        txt_title.setText(movie.title)
+        txt_description.setText(movie.description)
+        txt_director.setText(movie.director)
+        txt_year.setText(movie.year.toString())
+        txt_length.setText(movie.runtime.toString())
+        txt_rating.setText(movie.rating.toString())
+        txt_votes.setText(movie.votes.toString())
+        txt_revenue.setText(movie.revenue.toString())
 
         var myActorId = ""
         spinnerActors = findViewById(R.id.spinner_actors) as Spinner
-        spinnerActors.adapter = CustomAdapterActor(context = this@EditMovie, resourceId = R.layout.row_element, items = actors)
+        adapterSpinnerActor =  CustomAdapterSpinnerActor(context = this, actors = actors.toTypedArray())
+        spinnerActors.adapter = adapterSpinnerActor
         spinnerActors.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
@@ -108,7 +118,8 @@ class EditMovie : AppCompatActivity() {
 
         var myGenreId = ""
         spinnerGenres = findViewById(R.id.spinner_genres) as Spinner
-        spinnerGenres.adapter = CustomAdapterGenre(context = this@EditMovie, resourceId = R.layout.row_element, items = genres)
+        adapterSpinnerGenre =  CustomAdapterSpinnerGenre(context = this, genres = genres.toTypedArray())
+        spinnerGenres.adapter = adapterSpinnerGenre
         spinnerGenres.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
@@ -119,10 +130,15 @@ class EditMovie : AppCompatActivity() {
             }
         }
 
+        //Si no me funciona el count, poner un movies.size
         var movieEdited = """{"id": """" + (movies.count()+1).toString() + """","title": """" + txt_title.text + """","description": """" + txt_description.text + """","director": """" + txt_director.text + """","year": """" + txt_year.text + """","runtime": """" + txt_length.text + """","rating": """" + txt_rating.text + """","votes": """" + txt_votes.text + """","revenue": """" + txt_revenue.text + """","genres": ["""" + myGenreId + """"],"actors": ["""" + myActorId + """"]}"""
-        val urlMovie ="$REMOTE/mobile/user/getMovies.php?user=$USER&pass=$PASS"
+        Log.e("FILM: ", movieEdited)
+        val urlMovie ="$REMOTE/mobile/user/updateMovie.php?user=$USER&pass=$PASS"
+
         btn_save_changes.setOnClickListener {
-            post(urlMovie, movieEdited)
+            var thread = Thread(kotlinx.coroutines.Runnable {
+                post(urlMovie, movieEdited)
+            }).start()
             val intent = Intent(this, MainActivity::class.java);
             startActivity(intent)
         }

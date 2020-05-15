@@ -55,7 +55,8 @@ class MovieList : AppCompatActivity() {
             val intent = Intent(this@MovieList, EditMovie::class.java)
             val movie = movies[position]
             intent.putExtra(ID, movie.id)
-            startActivityForResult(intent, EDIT_CODE)
+            startActivity(intent)
+            //startActivityForResult(intent, EDIT_CODE)
             adapter.getView(position, view, parent)
             return@setOnItemLongClickListener true
         }

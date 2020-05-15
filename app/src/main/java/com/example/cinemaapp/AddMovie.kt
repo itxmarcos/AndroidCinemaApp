@@ -2,28 +2,23 @@ package com.example.cinemaapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.example.cinemaapp.utils.CustomAdapterActor
-import com.example.cinemaapp.utils.CustomAdapterGenre
+import com.example.cinemaapp.utils.CustomAdapterSpinnerActor
 import com.example.cinemaapp.utils.CustomAdapterSpinnerGenre
 import com.example.cinemaapp.utils.api.ApiClient
 import com.example.cinemaapp.utils.data_model.Actor
 import com.example.cinemaapp.utils.data_model.Genre
 import com.example.cinemaapp.utils.data_model.Movie
 import kotlinx.android.synthetic.main.activity_add_movie.*
-import kotlinx.android.synthetic.main.row_element.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import org.json.JSONArray
-import org.json.JSONObject
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
-import kotlinx.android.synthetic.main.row_element.view.*
-import kotlinx.android.synthetic.main.row_element.view.textView
 
 const val REMOTE = "https://movies-api-v2.000webhostapp.com"
 const val USER = "mobile"
@@ -33,7 +28,7 @@ class AddMovie : AppCompatActivity() {
     lateinit var spinnerActors : Spinner
     lateinit var spinnerGenres : Spinner
     lateinit var adapterSpinnerGenre: CustomAdapterSpinnerGenre
-    lateinit var adapterActor: CustomAdapterActor
+    lateinit var adapterSpinnerActor: CustomAdapterSpinnerActor
 
     val movies by lazy {
         runBlocking{
@@ -83,15 +78,14 @@ class AddMovie : AppCompatActivity() {
 
         var myActorId = ""
         spinnerActors = findViewById(R.id.spinner_actors) as Spinner
-        adapterActor =  CustomAdapterActor(context = this@AddMovie, resourceId = R.layout.row_element, items = actors)
-        spinnerActors.adapter = adapterActor
+        adapterSpinnerActor =  CustomAdapterSpinnerActor(context = this@AddMovie, actors = actors.toTypedArray())
+        spinnerActors.adapter = adapterSpinnerActor
         spinnerActors.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                //adapterActor.getView(position, view, parent)
                 myActorId = actors[position].id
             }
         }
@@ -106,16 +100,19 @@ class AddMovie : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                //adapterSpinnerGenre.getView(position, view, parent)
                 myGenreId = genres[position].id
             }
         }
 
+        //Si no me funciona el count, poner un movies.size
         var movieEdited = """{"id": """" + (movies.count()+1).toString() + """","title": """" + txt_title.text + """","description": """" + txt_description.text + """","director": """" + txt_director.text + """","year": """" + txt_year.text + """","runtime": """" + txt_length.text + """","rating": """" + txt_rating.text + """","votes": """" + txt_votes.text + """","revenue": """" + txt_revenue.text + """","genres": ["""" + myGenreId + """"],"actors": ["""" + myActorId + """"]}"""
-        val urlMovie ="$REMOTE/mobile/user/getMovies.php?user=$USER&pass=$PASS"
+        Log.e("FILM: ", movieEdited)
+        val urlMovie ="$REMOTE/mobile/user/addMovie.php?user=$USER&pass=$PASS"
 
         btn_add_movie.setOnClickListener {
-            post(urlMovie, movieEdited)
+            var thread = Thread(kotlinx.coroutines.Runnable {
+                post(urlMovie, movieEdited)
+            }).start()
             val intent = Intent(this, MainActivity::class.java);
             startActivity(intent)
         }
